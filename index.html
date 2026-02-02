@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sneha, be my Valentine?</title>
+  <style>
+    :root{
+      --bg1:#0f172a;
+      --bg2:#1f2937;
+      --card:#0b1220cc;
+      --text:#e5e7eb;
+      --muted:#9ca3af;
+      --pink:#fb7185;
+      --green:#34d399;
+      --shadow: 0 20px 60px rgba(0,0,0,.35);
+      --radius: 24px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      background: radial-gradient(1200px 800px at 20% 10%, #fb718522, transparent 55%),
+                  radial-gradient(1000px 700px at 80% 30%, #34d39922, transparent 50%),
+                  linear-gradient(140deg, var(--bg1), var(--bg2));
+      font-family: var(--font);
+      color: var(--text);
+    }
+    .wrap{
+      width:min(920px, 92vw);
+      padding: 22px;
+    }
+    .card{
+      background: var(--card);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    header{
+      padding: 36px 28px 18px;
+      text-align:center;
+    }
+    .badge{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: var(--muted);
+      font-size:14px;
+    }
+    h1{
+      margin:18px 0 8px;
+      font-size: clamp(32px, 4vw, 52px);
+      line-height:1.05;
+      letter-spacing:-0.02em;
+    }
+    p{
+      margin:0 auto;
+      max-width: 60ch;
+      color: var(--muted);
+      font-size: 16px;
+      line-height:1.6;
+    }
+    .content{
+      padding: 10px 28px 28px;
+      display:grid;
+      gap: 18px;
+      grid-template-columns: 1fr;
+    }
+    .note{
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      padding: 16px 16px;
+      display:flex;
+      gap: 14px;
+      align-items:flex-start;
+    }
+    .heart{
+      width:42px; height:42px;
+      flex:0 0 42px;
+      border-radius: 14px;
+      display:grid;
+      place-items:center;
+      background: rgba(251,113,133,.15);
+      border: 1px solid rgba(251,113,133,.25);
+      font-size: 20px;
+    }
+    .note h2{
+      margin:0 0 4px;
+      font-size: 16px;
+    }
+    .note .small{
+      margin:0;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .actions{
+      display:flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content:center;
+      padding: 6px 28px 34px;
+    }
+    button{
+      border:0;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      transition: transform .08s ease, filter .2s ease;
+    }
+    button:active{transform: translateY(1px) scale(.99)}
+    .yes{
+      background: linear-gradient(135deg, var(--green), #22c55e);
+      color:#062416;
+    }
+    .no{
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.14);
+      color: var(--text);
+    }
+    .footer{
+      text-align:center;
+      padding: 0 28px 26px;
+      color: rgba(229,231,235,.65);
+      font-size: 13px;
+    }
+    .result{
+      text-align:center;
+      padding: 0 28px 22px;
+      min-height: 26px;
+      font-weight: 700;
+    }
+    .result span{color: var(--pink)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <header>
+        <div class="badge">💌 A tiny page for you, Sneha</div>
+        <h1>Sneha, will you be<br/>my Valentine? 💖</h1>
+        <p>
+          You make every day feel like home. Today I’m just making it official —
+          will you be my Valentine?
+        </p>
+      </header>
+
+      <div class="content">
+        <div class="note">
+          <div class="heart">🌸</div>
+          <div>
+            <h2>Pink orchids included</h2>
+            <p class="small">Because I know your favorite flowers 😉</p>
+          </div>
+        </div>
+
+        <div class="note">
+          <div class="heart">🍽️</div>
+          <div>
+            <h2>Plan: dinner + dessert</h2>
+            <p class="small">Your pick — fancy, cozy, or both.</p>
+          </div>
+        </div>
+
+        <div class="note">
+          <div class="heart">✨</div>
+          <div>
+            <h2>One promise</h2>
+            <p class="small">More laughs, more dates, and more “us” in 2026.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="yes" id="yesBtn">YES 💚</button>
+        <button class="no" id="noBtn">Let me think 😅</button>
+      </div>
+
+      <div class="result" id="result"></div>
+
+      <div class="footer">
+        Made with love by Maalik 💘
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const result = document.getElementById("result");
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn  = document.getElementById("noBtn");
+
+    yesBtn.addEventListener("click", () => {
+      result.innerHTML = "Yay! 💖 <span>Date locked</span> — tell me what you want to do tonight 😄";
+      confettiBurst();
+    });
+
+    noBtn.addEventListener("mouseover", () => {
+      // playful “no” button dodge
+      const dx = (Math.random() * 240) - 120;
+      const dy = (Math.random() * 120) - 60;
+      noBtn.style.transform = `translate(${dx}px, ${dy}px)`;
+    });
+
+    // Tiny confetti (no libraries)
+    function confettiBurst(){
+      for (let i=0; i<80; i++){
+        const s = document.createElement("span");
+        s.style.position="fixed";
+        s.style.left = (Math.random()*100)+"vw";
+        s.style.top  = "-10px";
+        s.style.width = "8px";
+        s.style.height= "12px";
+        s.style.background = `hsl(${Math.random()*360}, 90%, 65%)`;
+        s.style.borderRadius="3px";
+        s.style.zIndex="9999";
+        s.style.opacity="0.9";
+        document.body.appendChild(s);
+
+        const fall = 140 + Math.random()*260;
+        const drift = (Math.random()*2-1)*120;
+        const dur = 900 + Math.random()*900;
+
+        s.animate([
+          { transform:`translate(0,0) rotate(0deg)` },
+          { transform:`translate(${drift}px, ${fall}vh) rotate(${360+Math.random()*720}deg)` }
+        ], { duration: dur, easing:"cubic-bezier(.2,.8,.2,1)" });
+
+        setTimeout(()=>s.remove(), dur);
+      }
+    }
+  </script>
+</body>
+</html>
