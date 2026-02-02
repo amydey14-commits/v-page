@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sneha, be my Valentine?</title>
+  <title>Sneha, be my Valentine? 💖</title>
+
   <style>
     :root{
       --bg1:#0f172a;
@@ -108,7 +109,7 @@
       gap: 12px;
       flex-wrap: wrap;
       justify-content:center;
-      padding: 6px 28px 34px;
+      padding: 6px 28px 18px;
     }
     button{
       border:0;
@@ -129,21 +130,65 @@
       border: 1px solid rgba(255,255,255,.14);
       color: var(--text);
     }
+
+    .result{
+      text-align:center;
+      padding: 0 28px 10px;
+      min-height: 26px;
+      font-weight: 800;
+    }
+    .result span{color: var(--pink)}
+
+    /* --- Smooth reveal photo + caption --- */
+    .reveal{
+      display:none;
+      text-align:center;
+      padding: 0 28px 28px;
+    }
+    .photo{
+      max-width: 320px;
+      width: 82%;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+      opacity: 0;
+      transform: translateY(10px) scale(.98);
+      transition: opacity 700ms ease, transform 700ms ease;
+    }
+    .caption{
+      margin-top: 12px;
+      font-weight: 800;
+      color: rgba(229,231,235,.92);
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 700ms ease 120ms, transform 700ms ease 120ms;
+    }
+    .reveal.show .photo,
+    .reveal.show .caption{
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
     .footer{
       text-align:center;
       padding: 0 28px 26px;
       color: rgba(229,231,235,.65);
       font-size: 13px;
     }
-    .result{
-      text-align:center;
-      padding: 0 28px 22px;
-      min-height: 26px;
-      font-weight: 700;
+
+    /* Small helper button (optional) */
+    .tiny{
+      margin-top: 10px;
+      font-size: 12px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.14);
+      color: rgba(229,231,235,.9);
+      cursor: pointer;
     }
-    .result span{color: var(--pink)}
   </style>
 </head>
+
 <body>
   <div class="wrap">
     <div class="card">
@@ -189,6 +234,23 @@
 
       <div class="result" id="result"></div>
 
+      <!-- Photo + caption (hidden until YES) -->
+      <div id="photoWrap" class="reveal">
+        <!-- Upload your photo to the repo and name it: us.jpg (or change this filename) -->
+        <img src="us.jpg" alt="Us 💖" class="photo" />
+        <div class="caption">Always you. Always us. 💖</div>
+
+        <!-- Optional: if autoplay is blocked, she can tap this -->
+        <button class="tiny" id="playMusicBtn" style="display:none;">Tap to play music 🎶</button>
+      </div>
+
+      <!-- Background music (IMPORTANT: use an audio file you own / have rights to) -->
+      <!-- Put your audio file in the repo (same folder as index.html) and name it: chand_baliyan.mp3 -->
+      <!-- If the filename is different, update it below. -->
+      <audio id="bgMusic" preload="auto" loop>
+        <source src="chand_baliyan.mp3" type="audio/mpeg" />
+      </audio>
+
       <div class="footer">
         Made with love by Bebu 💘
       </div>
@@ -199,14 +261,45 @@
     const result = document.getElementById("result");
     const yesBtn = document.getElementById("yesBtn");
     const noBtn  = document.getElementById("noBtn");
+    const photoWrap = document.getElementById("photoWrap");
+    const bgMusic = document.getElementById("bgMusic");
+    const playMusicBtn = document.getElementById("playMusicBtn");
 
-    yesBtn.addEventListener("click", () => {
-      result.innerHTML = "Yay! 💖 <span>Date locked</span> — tell me what you want to do tonight 😄";
+    yesBtn.addEventListener("click", async () => {
+      result.innerHTML = "Best YES ever 💖 <span>It’s a date!</span>";
+
+      // show + animate photo & caption
+      photoWrap.style.display = "block";
+      requestAnimationFrame(() => photoWrap.classList.add("show"));
+
+      // confetti
       confettiBurst();
+
+      // try to play music (will work if file exists & browser allows)
+      if (bgMusic) {
+        try {
+          bgMusic.volume = 0.8;
+          await bgMusic.play();
+        } catch (e) {
+          // If blocked, show a tiny button to start music manually
+          if (playMusicBtn) playMusicBtn.style.display = "inline-block";
+        }
+      }
     });
 
+    if (playMusicBtn && bgMusic) {
+      playMusicBtn.addEventListener("click", async () => {
+        try {
+          await bgMusic.play();
+          playMusicBtn.style.display = "none";
+        } catch (e) {
+          // ignore
+        }
+      });
+    }
+
+    // playful “no” button dodge
     noBtn.addEventListener("mouseover", () => {
-      // playful “no” button dodge
       const dx = (Math.random() * 240) - 120;
       const dy = (Math.random() * 120) - 60;
       noBtn.style.transform = `translate(${dx}px, ${dy}px)`;
